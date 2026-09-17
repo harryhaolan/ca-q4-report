@@ -338,6 +338,28 @@
         <div class="kpi-sub">3–5候选中，评估后仅1–2个有大单能力</div>
       </div>
     </div>
+
+    <div class="card calc-card" style="margin-top:20px;">
+      <h3 style="margin:0 0 4px;font-size:15px;">老板填写：当前加州区域实际营收基数</h3>
+      <p class="row-flag" style="margin:0 0 14px;">这是整份模型最后一块拼图——填上这一个数字，"收入可行性"那节的成交笔数/线索量会自动按剩余缺口重新算，不再是按整个$3M算。</p>
+      <div class="calc-controls">
+        <label class="calc-row">
+          <span class="calc-label">当前季度已确认营收</span>
+          <input type="number" id="baseline" min="0" step="1000" placeholder="待填写">
+          <span class="calc-out mono">美元</span>
+        </label>
+      </div>
+      <div class="calc-results" style="grid-template-columns:repeat(2,1fr);">
+        <div class="calc-result">
+          <div class="kpi-label">距合同目标净缺口</div>
+          <div class="kpi-val mono" id="baselineGap">$3,000,000</div>
+        </div>
+        <div class="calc-result">
+          <div class="kpi-label">已完成比例</div>
+          <div class="kpi-val mono" id="baselinePct">0%</div>
+        </div>
+      </div>
+    </div>
   </header>
 
   <nav class="toc">
@@ -555,7 +577,7 @@
 
     <div class="card calc-card">
       <h3 style="margin:0 0 4px;font-size:15px;">调整假设，数字联动</h3>
-      <p class="row-flag" style="margin:0 0 16px;">$3M是合同金额，固定不变；拖动下面三个滑块，看目标在不同假设下需要什么样的执行力（候选账户数默认按评估后真正可用的1–2个设置，而不是表面的3–5个）。</p>
+      <p class="row-flag" style="margin:0 0 16px;">下面按"剩余缺口"计算(= $3M − 上方老板填写的营收基数)；拖动三个滑块，看剩余缺口在不同假设下需要什么样的执行力（候选账户数默认按评估后真正可用的1–2个设置，而不是表面的3–5个）。</p>
 
       <div class="calc-controls">
         <label class="calc-row">
@@ -813,10 +835,11 @@
 
 <script>
 (function(){
-  var TARGET = 3000000, CAP_LOW = 500, CAP_HIGH = 650;
+  var CONTRACT = 3000000, CAP_LOW = 500, CAP_HIGH = 650;
   var dealSize = document.getElementById('dealSize');
   var candidates = document.getElementById('candidates');
   var closeRate = document.getElementById('closeRate');
+  var baseline = document.getElementById('baseline');
   var dealSizeOut = document.getElementById('dealSizeOut');
   var candidatesOut = document.getElementById('candidatesOut');
   var closeRateOut = document.getElementById('closeRateOut');
@@ -825,6 +848,8 @@
   var outUnits = document.getElementById('outUnits');
   var outLeads = document.getElementById('outLeads');
   var outVerdict = document.getElementById('outVerdict');
+  var baselineGap = document.getElementById('baselineGap');
+  var baselinePct = document.getElementById('baselinePct');
 
   function fmtMoney(n){
     if(n >= 1000000){
@@ -834,19 +859,32 @@
     return '$' + Math.round(n/1000) + 'K';
   }
 
+  function getTarget(){
+    var b = Number(baseline.value) || 0;
+    return Math.max(CONTRACT - b, 0);
+  }
+
+  function updateBaseline(){
+    var b = Number(baseline.value) || 0;
+    var gap = Math.max(CONTRACT - b, 0);
+    baselineGap.textContent = '$' + gap.toLocaleString();
+    baselinePct.textContent = Math.min(Math.round((b/CONTRACT)*100), 100) + '%';
+  }
+
   function update(){
     var ds = Number(dealSize.value) * 1000;
     var ca = Number(candidates.value);
     var cr = Number(closeRate.value) / 100;
+    var target = getTarget();
 
     dealSizeOut.textContent = '$' + dealSize.value + 'K';
     candidatesOut.textContent = ca + '个';
     closeRateOut.textContent = closeRate.value + '%';
 
-    var deals = Math.round(TARGET / ds);
+    var deals = Math.round(target / ds);
     outDeals.textContent = deals + '笔';
 
-    var perAccount = TARGET / ca;
+    var perAccount = target / ca;
     outPerAccount.textContent = fmtMoney(perAccount);
     outUnits.textContent = '≈' + Math.round(perAccount/ds) + '台/户';
 
@@ -864,6 +902,11 @@
   [dealSize, candidates, closeRate].forEach(function(el){
     el.addEventListener('input', update);
   });
+  baseline.addEventListener('input', function(){
+    updateBaseline();
+    update();
+  });
+  updateBaseline();
   update();
 })();
 </script>
