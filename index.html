@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>加州Q4可行性简报</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  html{color-scheme:light dark;}
+  body{margin:0;}
+  :root{
+    --bg:#F5F6F7;
+    --surface:#FFFFFF;
+    --surface-2:#EDF0F2;
+    --ink:#1A2129;
+    --ink-2:#454E59;
+    --muted:#6B7480;
+    --border:#DEE2E6;
+    --accent:#0D7377;
+    --accent-strong:#0A5F63;
+    --accent-bg:rgba(13,115,119,0.09);
+    --good:#2F7D53;
+    --good-bg:rgba(47,125,83,0.11);
+    --warning:#A9691A;
+    --warning-bg:rgba(169,105,26,0.11);
+    --critical:#B4472A;
+    --critical-bg:rgba(180,71,42,0.11);
+    --font-display:'IBM Plex Sans',system-ui,sans-serif;
+    --font-body:'IBM Plex Serif',Georgia,serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10151A;
+      --surface:#171D24;
+      --surface-2:#1E262E;
+      --ink:#E7EAED;
+      --ink-2:#C3C9CF;
+      --muted:#8B939B;
+      --border:#2A323C;
+      --accent:#38B4B0;
+      --accent-strong:#57C7C3;
+      --accent-bg:rgba(56,180,176,0.14);
+      --good:#4FAE7A;
+      --good-bg:rgba(79,174,122,0.16);
+      --warning:#D79A46;
+      --warning-bg:rgba(215,154,70,0.16);
+      --critical:#DC7E5E;
+      --critical-bg:rgba(220,126,94,0.16);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:15.5px;
+    line-height:1.65;
+    padding-inline:20px;
+    padding-block:0 64px;
+  }
+  .wrap{max-width:900px;margin:0 auto;}
+  h1,h2,h3,.label,.eyebrow,.kpi-val,button{font-family:var(--font-display);}
+  .mono,.num,td.num,th.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;}
+  h1{text-wrap:balance;}
+  h2{text-wrap:balance;}
+  a{color:var(--accent-strong);}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  header.cover{
+    padding-block:40px 28px;
+    border-bottom:1px solid var(--border);
+  }
+  .eyebrow{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.08em;
+    color:var(--accent-strong);
+    text-transform:uppercase;
+    margin:0 0 10px;
+  }
+  h1.title{
+    font-size:clamp(28px,5vw,40px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  .subtitle{
+    font-family:var(--font-body);
+    font-size:16px;
+    color:var(--ink-2);
+    max-width:60ch;
+    margin:0 0 18px;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 20px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  .kpi-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:26px;
+  }
+  .kpi{
+    background:var(--surface);
+    padding:16px 16px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-width:0;
+  }
+  .kpi-label{font-size:11.5px;color:var(--muted);letter-spacing:.03em;}
+  .kpi-val{font-size:22px;font-weight:700;color:var(--ink);font-family:var(--font-mono);letter-spacing:-0.01em;}
+  .kpi-sub{font-size:11.5px;color:var(--muted);}
+  .kpi-val.warn{color:var(--warning);}
+  .kpi-val.crit{color:var(--critical);}
+  .kpi-val.good{color:var(--good);}
+
+  @media (max-width:620px){
+    .kpi-strip{grid-template-columns:repeat(2,1fr);}
+  }
+
+  nav.toc{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 4px;
+    padding-block:16px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:8px;
+  }
+  nav.toc a{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--ink-2);
+    text-decoration:none;
+    padding:5px 10px;
+    border:1px solid var(--border);
+    border-radius:100px;
+    background:var(--surface);
+  }
+  nav.toc a:hover{border-color:var(--accent);color:var(--accent-strong);}
+
+  section{padding-block:38px;border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  .sec-eyebrow{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:.06em;
+    margin:0 0 6px;
+  }
+  h2{
+    font-size:22px;
+    font-weight:700;
+    margin:0 0 12px;
+    color:var(--ink);
+  }
+  .lede{color:var(--ink-2);max-width:66ch;margin:0 0 22px;}
+  .lede strong{color:var(--ink);}
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-family:var(--font-mono);
+    font-size:11px;
+    font-weight:500;
+    padding:2px 9px;
+    border-radius:100px;
+    white-space:nowrap;
+  }
+  .pill::before{content:"";width:6px;height:6px;border-radius:50%;flex:none;}
+  .pill.confirmed{background:var(--accent-bg);color:var(--accent-strong);}
+  .pill.confirmed::before{background:var(--accent);}
+  .pill.estimate{background:var(--warning-bg);color:var(--warning);}
+  .pill.estimate::before{background:var(--warning);}
+  .pill.pending{background:var(--critical-bg);color:var(--critical);}
+  .pill.pending::before{background:var(--critical);}
+
+  .pill-key{display:flex;flex-wrap:wrap;gap:10px 18px;margin:0 0 20px;font-size:12px;color:var(--muted);align-items:center;}
+  .pill-key .pill{margin-right:2px;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:18px;
+  }
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:680px){.grid-2{grid-template-columns:1fr;}}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{font-family:var(--font-display);font-weight:600;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.02em;}
+  tr:last-child td{border-bottom:none;}
+  td.num,th.num{text-align:right;white-space:nowrap;}
+  .table-scroll{overflow-x:auto;}
+  .table-scroll table{min-width:520px;}
+
+  .row-flag{font-size:11.5px;color:var(--muted);}
+
+  .bar-cell{display:flex;align-items:center;gap:10px;}
+  .bar-track{flex:1;height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden;min-width:60px;}
+  .bar-fill{height:100%;background:var(--accent);border-radius:4px;}
+
+  .callout{
+    border-left:3px solid var(--border);
+    background:var(--surface-2);
+    border-radius:0 8px 8px 0;
+    padding:14px 18px;
+    margin:0 0 18px;
+    font-size:13.5px;
+    color:var(--ink-2);
+  }
+  .callout.risk{border-left-color:var(--critical);background:var(--critical-bg);}
+  .callout.risk strong{color:var(--critical);}
+  .callout.note{border-left-color:var(--accent);background:var(--accent-bg);}
+  .callout.note strong{color:var(--accent-strong);}
+
+  figure{margin:0 0 10px;}
+  figure svg{width:100%;height:auto;display:block;}
+  figcaption{font-size:12px;color:var(--muted);margin-top:8px;text-align:center;}
+  .chart-axis-label{fill:var(--muted);font-family:var(--font-mono);font-size:11px;}
+  .chart-value-label{fill:var(--ink);font-family:var(--font-mono);font-size:12px;font-weight:600;}
+  .chart-cat-label{fill:var(--ink-2);font-family:var(--font-display);font-size:11.5px;}
+  .grid-line{stroke:var(--border);stroke-width:1;}
+  .ref-band{fill:var(--warning);fill-opacity:0.10;}
+  .ref-band-line{stroke:var(--warning);stroke-width:1;stroke-dasharray:3 3;}
+  .node-label{fill:var(--ink);font-family:var(--font-display);font-size:12px;font-weight:600;}
+  .node-sub{fill:var(--ink-2);font-family:var(--font-mono);font-size:11px;}
+  .node-label-inverse{fill:#fff;font-family:var(--font-display);font-size:12px;font-weight:600;}
+  .node-sub-inverse{fill:#fff;font-family:var(--font-mono);font-size:11px;}
+  .edge{stroke:var(--muted);stroke-width:1.5;fill:none;}
+  .edge-dashed{stroke:var(--warning);stroke-width:1.5;stroke-dasharray:4 3;fill:none;}
+
+  .check-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .check-list li{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    padding:12px 14px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:13.5px;
+  }
+  .check-num{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--critical);
+    background:var(--critical-bg);
+    border-radius:50%;
+    width:20px;height:20px;
+    display:flex;align-items:center;justify-content:center;
+    flex:none;
+    margin-top:1px;
+  }
+  .check-list b{color:var(--ink);}
+
+  .action-list{display:flex;flex-direction:column;gap:12px;}
+  .action{
+    display:grid;
+    grid-template-columns:88px 1fr;
+    gap:14px;
+    padding:13px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .action:last-child{border-bottom:none;}
+  .action-when{font-family:var(--font-mono);font-size:11.5px;color:var(--accent-strong);padding-top:2px;}
+  .action-body b{color:var(--ink);}
+  .action-body{font-size:13.5px;color:var(--ink-2);}
+
+  .calc-card{border-color:var(--accent);}
+  .calc-controls{display:flex;flex-direction:column;gap:14px;margin-bottom:18px;}
+  .calc-row{display:grid;grid-template-columns:120px 1fr 64px;align-items:center;gap:12px;}
+  .calc-label{font-size:13px;color:var(--ink-2);font-family:var(--font-display);}
+  .calc-row input[type="range"]{width:100%;accent-color:var(--accent);}
+  .calc-out{font-size:13px;font-weight:600;color:var(--ink);text-align:right;}
+  .calc-results{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .calc-result{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;}
+  .calc-result .kpi-val{font-size:17px;}
+  @media (max-width:680px){
+    .calc-row{grid-template-columns:1fr;text-align:left;}
+    .calc-out{text-align:left;}
+    .calc-results{grid-template-columns:repeat(2,1fr);}
+  }
+
+  footer{padding-block:30px 10px;font-size:12px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="cover">
+    <p class="eyebrow">加州区域运营 · 2026 Q4</p>
+    <h1 class="title">$3,000,000 合同目标压力测试</h1>
+    <p class="subtitle">拆解Q4营业额目标：场地成本、大客户漏斗、线索容量、展会预算——标出已确认、测算估算、待确认三类数字。</p>
+    <div class="meta-row">
+      <span>编制：Harry Zeng · 加州区域运营总监</span>
+      <span>日期：2026-09-16</span>
+      <span>口径：加州区域 Q4 累计营业额，合同约定金额</span>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi">
+        <div class="kpi-label">Q4 目标营业额</div>
+        <div class="kpi-val">$3.0M</div>
+        <div class="kpi-sub">合同要求金额</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">现实基准预估</div>
+        <div class="kpi-val warn">$1.2–1.9M</div>
+        <div class="kpi-sub">目标的 40%–63%</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">预计缺口</div>
+        <div class="kpi-val crit">$1.1–1.8M</div>
+        <div class="kpi-sub">需渠道扩容填补</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">真正可用账户 vs 所需</div>
+        <div class="kpi-val crit">1–2 / 5–10</div>
+        <div class="kpi-sub">3–5候选中，评估后仅1–2个有大单能力</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <a href="#summary">执行摘要</a>
+    <a href="#realestate">场地成本</a>
+    <a href="#revenue">收入可行性</a>
+    <a href="#funnel">线索漏斗容量</a>
+    <a href="#tradeshow">展会预算</a>
+    <a href="#open">待确认与建议</a>
+  </nav>
+
+  <div class="pill-key">
+    <span><span class="pill confirmed">已确认</span> 来自对话中给定的真实数字</span>
+    <span><span class="pill estimate">测算估算</span> 基于给定数字推导 / 行业基准假设</span>
+    <span><span class="pill pending">待确认</span> 需要补充真实数据才能钉死</span>
+  </div>
+
+  <section id="summary">
+    <p class="sec-eyebrow">00 / 执行摘要</p>
+    <h2>核心问题：把$3M拆开，哪个环节最先断裂？</h2>
+    <p class="lede">
+      $3M是<strong>合同约定金额</strong>，靠3–5个存量大客户单独扛不动——评估后其中真正能扛大单的只有1–2个，除非其余每户也吞下极端订单量。更现实的路径是<strong>大客户 + 走量线索并行</strong>：现实基准落在 <strong>$1.2M–$1.9M</strong>，缺口靠渠道扩容补。
+    </p>
+    <div class="callout risk">
+      <strong>最大风险是候选池太薄，评估后比看起来还要薄，其次是合同性质。</strong> 候选账户3–5个本就够不到策略下限5–10个；逐个评估后，3–5个里<strong>真正有能力下大单的只有1–2个</strong>，缺口比表面数字更严重。这次目标又是合同金额，没达标不只是业绩问题，还涉及违约风险。扩大候选池优先级应高于办公室搬迁和CRM建设。
+    </div>
+
+    <h3 style="margin:26px 0 6px;font-size:16px;">逻辑链：如果只能救一个数字，救哪个？</h3>
+    <p class="row-flag" style="margin:0 0 14px;">客单价、候选账户数、转化率——三个假设串起从合同金额到现实预估的整条链条，任何一环卡住，下游全部失真。</p>
+
+    <figure>
+      <svg viewBox="0 0 900 860" role="img" aria-label="从合同目标到行动建议的逻辑链示意图">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/>
+          </marker>
+          <marker id="arrow-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--warning)"/>
+          </marker>
+        </defs>
+
+        <line x1="450" y1="80" x2="450" y2="118" class="edge" marker-end="url(#arrow)"/>
+        <line x1="450" y1="228" x2="450" y2="268" class="edge" marker-end="url(#arrow)"/>
+        <line x1="410" y1="330" x2="255" y2="368" class="edge" marker-end="url(#arrow)"/>
+        <line x1="490" y1="330" x2="655" y2="368" class="edge" marker-end="url(#arrow)"/>
+        <line x1="230" y1="478" x2="230" y2="538" class="edge" marker-end="url(#arrow)"/>
+        <line x1="670" y1="478" x2="670" y2="538" class="edge" marker-end="url(#arrow)"/>
+        <line x1="790" y1="490" x2="742" y2="536" class="edge-dashed" marker-end="url(#arrow-warn)"/>
+        <line x1="255" y1="600" x2="400" y2="620" class="edge" marker-end="url(#arrow)"/>
+        <line x1="650" y1="600" x2="500" y2="620" class="edge" marker-end="url(#arrow)"/>
+        <line x1="450" y1="682" x2="450" y2="718" class="edge" marker-end="url(#arrow)"/>
+        <line x1="450" y1="762" x2="450" y2="798" class="edge" marker-end="url(#arrow)"/>
+        <text x="768" y="505" text-anchor="middle" class="node-sub" font-size="10">对照</text>
+
+        <rect x="320" y="20" width="260" height="60" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
+        <text x="450" y="45" text-anchor="middle" class="node-label">合同目标</text>
+        <text x="450" y="63" text-anchor="middle" class="node-sub">$3,000,000</text>
+
+        <polygon points="450,118 585,173 450,228 315,173" fill="var(--warning)"/>
+        <text x="450" y="168" text-anchor="middle" class="node-label-inverse">假设：客单价</text>
+        <text x="450" y="185" text-anchor="middle" class="node-sub-inverse">$20K–$50K</text>
+
+        <rect x="320" y="270" width="260" height="60" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
+        <text x="450" y="295" text-anchor="middle" class="node-label">需要成交量</text>
+        <text x="450" y="313" text-anchor="middle" class="node-sub">60–150笔</text>
+
+        <polygon points="230,368 355,423 230,478 105,423" fill="var(--surface-2)" stroke="var(--border)"/>
+        <text x="230" y="415" text-anchor="middle" class="node-label" font-size="11">候选账户</text>
+        <text x="230" y="431" text-anchor="middle" class="node-sub" font-size="10">3–5现有 vs 5–10所需</text>
+
+        <polygon points="670,368 795,423 670,478 545,423" fill="var(--warning)"/>
+        <text x="670" y="418" text-anchor="middle" class="node-label-inverse">假设：转化率</text>
+        <text x="670" y="435" text-anchor="middle" class="node-sub-inverse">5%–25%</text>
+
+        <rect x="130" y="540" width="200" height="60" rx="6" fill="var(--critical)"/>
+        <text x="230" y="576" text-anchor="middle" class="node-label-inverse">候选池缺口</text>
+
+        <rect x="560" y="540" width="220" height="60" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
+        <text x="670" y="565" text-anchor="middle" class="node-label">所需线索量</text>
+        <text x="670" y="583" text-anchor="middle" class="node-sub">430–1,720条</text>
+
+        <rect x="730" y="465" width="150" height="50" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
+        <text x="805" y="486" text-anchor="middle" class="node-label" font-size="10.5">渠道容量上限</text>
+        <text x="805" y="502" text-anchor="middle" class="node-sub" font-size="10">500–650条</text>
+
+        <rect x="320" y="620" width="260" height="62" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
+        <text x="450" y="646" text-anchor="middle" class="node-label">现实基准预估</text>
+        <text x="450" y="664" text-anchor="middle" class="node-sub">$1.2M–$1.9M</text>
+
+        <rect x="320" y="720" width="260" height="42" rx="6" fill="var(--critical)"/>
+        <text x="450" y="746" text-anchor="middle" class="node-label-inverse" font-size="12">缺口 $1.1M–$1.8M</text>
+
+        <rect x="230" y="800" width="440" height="42" rx="6" fill="var(--accent)"/>
+        <text x="450" y="826" text-anchor="middle" class="node-label-inverse" font-size="11.5">行动：扩大候选池 · 确认转化率 · 展会扩容</text>
+      </svg>
+      <figcaption>三个可调假设决定了整条链条的可信度——下方"调整假设"计算器可以逐一测试</figcaption>
+    </figure>
+
+    <div class="callout note">
+      <strong>敏感性排序：转化率 &gt; 候选账户规模 &gt; 客单价。</strong> 转化率每变化5个百分点，所需线索量摆动200–300条；候选账户数决定"能不能靠大客户扛住"；客单价影响相对最小，因为目标固定，客单价和成交笔数会自动反向抵消一部分。
+    </div>
+  </section>
+
+  <section id="realestate">
+    <p class="sec-eyebrow">01 / 场地成本</p>
+    <h2>仓办一体化：单价降87%，总支出涨2.5倍</h2>
+    <p class="lede">仓办一体化单价降87%，但起租门槛拉高绝对支出约 <strong>$213K/年</strong>。值不值，取决于是否已有单独仓储支出可被吸收。</p>
+
+    <figure>
+      <svg viewBox="0 0 560 320" role="img" aria-label="现办公室与仓办一体化年化成本对比柱状图">
+        <line x1="60" y1="280" x2="540" y2="280" class="grid-line"/>
+        <line x1="60" y1="199" x2="540" y2="199" class="grid-line"/>
+        <line x1="60" y1="118" x2="540" y2="118" class="grid-line"/>
+        <line x1="60" y1="36" x2="540" y2="36" class="grid-line"/>
+        <text x="52" y="284" text-anchor="end" class="chart-axis-label">$0</text>
+        <text x="52" y="203" text-anchor="end" class="chart-axis-label">$100K</text>
+        <text x="52" y="122" text-anchor="end" class="chart-axis-label">$200K</text>
+        <text x="52" y="40" text-anchor="end" class="chart-axis-label">$300K</text>
+
+        <rect x="135" y="211" width="90" height="69" rx="4" fill="var(--accent)"/>
+        <text x="180" y="200" text-anchor="middle" class="chart-value-label">≈$85K/年</text>
+        <text x="180" y="300" text-anchor="middle" class="chart-cat-label">现办公室 (Cosamisa)</text>
+        <text x="180" y="315" text-anchor="middle" class="chart-axis-label">$12/sqft · ~55sqm</text>
+
+        <rect x="375" y="38" width="90" height="242" rx="4" fill="var(--critical)"/>
+        <text x="420" y="27" text-anchor="middle" class="chart-value-label">≈$298K/年</text>
+        <text x="420" y="300" text-anchor="middle" class="chart-cat-label">仓办一体化 (City of Industry)</text>
+        <text x="420" y="315" text-anchor="middle" class="chart-axis-label">$1.60/sqft · 15–16k sqft</text>
+      </svg>
+      <figcaption>年化租金对比，中位数口径 · 差额 ≈ +$213K/年</figcaption>
+    </figure>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>项目</th><th class="num">现办公室</th><th class="num">仓办一体化</th><th>数据来源</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>单价</td><td class="num">$12/sqft/月</td><td class="num">$1.60/sqft/月</td><td><span class="pill confirmed">已确认</span></td></tr>
+          <tr><td>面积</td><td class="num">50–60㎡ (≈538–646 sqft)</td><td class="num">15,000–16,000 sqft</td><td><span class="pill confirmed">已确认</span></td></tr>
+          <tr><td>月租</td><td class="num">$6,456–$7,752</td><td class="num">$24,000–$25,600</td><td><span class="pill estimate">测算估算</span></td></tr>
+          <tr><td>年租</td><td class="num">$77,472–$93,024</td><td class="num">$288,000–$307,200</td><td><span class="pill estimate">测算估算</span></td></tr>
+          <tr><td>现有独立仓储(将被吸收)</td><td class="num">$1,000/月 ($12,000/年)</td><td class="num">并入仓办一体化</td><td><span class="pill confirmed">已确认</span></td></tr>
+          <tr><td><strong>真实净增量成本</strong></td><td class="num" colspan="2" style="text-align:center;"><strong>≈$199K–$202K/年</strong>（仓办一体化 − 现办公室 − 现仓储）</td><td><span class="pill estimate">测算估算</span></td></tr>
+          <tr><td>人均成本(按团队规模)</td><td class="num">≈$42.5K/人(2人)</td><td class="num">≈$59.6K/人(5人)</td><td><span class="pill estimate">测算估算</span></td></tr>
+          <tr><td>占季度目标比例</td><td class="num">—</td><td class="num">2.5%(若$3M/季度可持续)</td><td><span class="pill estimate">测算估算</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout note">
+      <strong>已确认：</strong>现办公室面积口径为平方米；现有独立仓储支出$1,000/月。扣除这笔即将被合并吸收的仓储费后，仓办一体化的<strong>真实净增量成本约$199K–$202K/年</strong>——比单纯办公室对办公室比较时的$213K/年低约$13K，因为City of Industry这笔租金本来就该替代掉现在单独付的仓储费。<strong>两个还没锁死的变量：</strong> ① industrial租约多为NNN(净出租)，税/保险/CAM可能是额外支出；② 若9-10月先租Downtown LA过渡，12月又要搬去仓办一体化，中间的双重搬迁成本(违约金/空档期/两次人工)还没算进去。
+    </div>
+  </section>
+
+  <section id="revenue">
+    <p class="sec-eyebrow">02 / 收入可行性</p>
+    <h2>逐个评估后更差：3–5个候选里，真正能扛大单的只有1–2个</h2>
+    <p class="lede">候选账户(3–5个)本就比策略要拿下的客户数(5–10个)少；逐户核实采购能力后，3–5个里能真正撑起17–29台量级订单的只有1–2个——候选池的天花板必须先抬高，而且比表面数字更紧迫。</p>
+
+    <figure>
+      <svg viewBox="0 0 560 250" role="img" aria-label="真正可用账户、候选账户与策略所需客户数对比图">
+        <line x1="140" y1="20" x2="140" y2="210" class="grid-line"/>
+        <line x1="211" y1="20" x2="211" y2="210" class="grid-line"/>
+        <line x1="282" y1="20" x2="282" y2="210" class="grid-line"/>
+        <line x1="353" y1="20" x2="353" y2="210" class="grid-line"/>
+        <line x1="424" y1="20" x2="424" y2="210" class="grid-line"/>
+        <line x1="495" y1="20" x2="495" y2="210" class="grid-line"/>
+        <text x="140" y="228" text-anchor="middle" class="chart-axis-label">0</text>
+        <text x="282" y="228" text-anchor="middle" class="chart-axis-label">4</text>
+        <text x="424" y="228" text-anchor="middle" class="chart-axis-label">8</text>
+        <text x="495" y="228" text-anchor="middle" class="chart-axis-label">10</text>
+
+        <line x1="317" y1="14" x2="317" y2="216" class="ref-band-line"/>
+
+        <text x="30" y="54" class="chart-cat-label">评估后真正可用</text>
+        <line x1="175" y1="50" x2="211" y2="50" stroke="var(--critical)" stroke-width="22" stroke-linecap="round"/>
+        <text x="193" y="35" text-anchor="middle" class="chart-value-label">1–2个</text>
+
+        <text x="30" y="114" class="chart-cat-label">现有候选账户</text>
+        <line x1="246" y1="110" x2="317" y2="110" stroke="var(--warning)" stroke-width="22" stroke-linecap="round"/>
+        <text x="281" y="95" text-anchor="middle" class="chart-value-label">3–5个</text>
+
+        <text x="30" y="174" class="chart-cat-label">策略所需客户数</text>
+        <line x1="317" y1="170" x2="495" y2="170" stroke="var(--critical)" stroke-width="22" stroke-linecap="round"/>
+        <text x="406" y="155" text-anchor="middle" class="chart-value-label">5–10个</text>
+
+        <text x="317" y="238" text-anchor="middle" class="chart-axis-label">候选上限=策略下限的交汇点</text>
+      </svg>
+      <figcaption>候选池(3–5)本就恰好卡在策略下限(5–10)的起点；逐户核实后真正可用的只有1–2个，缺口比表面数字更大</figcaption>
+    </figure>
+
+    <div class="card calc-card">
+      <h3 style="margin:0 0 4px;font-size:15px;">调整假设，数字联动</h3>
+      <p class="row-flag" style="margin:0 0 16px;">$3M是合同金额，固定不变；拖动下面三个滑块，看目标在不同假设下需要什么样的执行力（候选账户数默认按评估后真正可用的1–2个设置，而不是表面的3–5个）。</p>
+
+      <div class="calc-controls">
+        <label class="calc-row">
+          <span class="calc-label">平均客单价</span>
+          <input type="range" id="dealSize" min="20" max="50" step="1" value="35">
+          <span class="calc-out mono" id="dealSizeOut">$35K</span>
+        </label>
+        <label class="calc-row">
+          <span class="calc-label">候选账户数</span>
+          <input type="range" id="candidates" min="1" max="10" step="1" value="2">
+          <span class="calc-out mono" id="candidatesOut">2个</span>
+        </label>
+        <label class="calc-row">
+          <span class="calc-label">线索→成交转化率</span>
+          <input type="range" id="closeRate" min="5" max="25" step="1" value="15">
+          <span class="calc-out mono" id="closeRateOut">15%</span>
+        </label>
+      </div>
+
+      <div class="calc-results">
+        <div class="calc-result">
+          <div class="kpi-label">需要成交总笔数</div>
+          <div class="kpi-val mono" id="outDeals">—</div>
+        </div>
+        <div class="calc-result">
+          <div class="kpi-label">若全靠候选账户，每户需贡献</div>
+          <div class="kpi-val mono" id="outPerAccount">—</div>
+          <div class="kpi-sub" id="outUnits"></div>
+        </div>
+        <div class="calc-result">
+          <div class="kpi-label">对应所需线索总量</div>
+          <div class="kpi-val mono" id="outLeads">—</div>
+        </div>
+        <div class="calc-result">
+          <div class="kpi-label">对比渠道容量(500–650条)</div>
+          <div class="kpi-val mono" id="outVerdict">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <strong>基准判断已按新信息下修(独立测算，非滑块结果)：</strong> 评估后真正能扛量的只有1–2个大账户，贡献下修至约$0.3M–$1.0M（原先按2–3个估的$0.56M–$1.58M不再成立）；走量渠道需要补的缺口相应更大，现实预估合计下修至 <strong>$1.2M–$1.9M</strong>。
+    </div>
+  </section>
+
+  <section id="funnel">
+    <p class="sec-eyebrow">03 / 线索漏斗容量</p>
+    <h2>走量渠道够不够，取决于转化率能不能做到15%以上</h2>
+    <p class="lede">反推所需线索量对转化率极度敏感——现有渠道容量(277存量+外部线索公司+日常陌拓)大概只能摸到500–650条，用上方计算器输入你估的转化率就能实时对照。</p>
+
+    <figure>
+      <svg viewBox="0 0 560 340" role="img" aria-label="不同转化率下所需线索量与现有渠道容量对比图">
+        <rect x="70" y="192.5" width="470" height="22.5" class="ref-band"/>
+        <line x1="70" y1="192.5" x2="540" y2="192.5" class="ref-band-line"/>
+        <line x1="70" y1="215" x2="540" y2="215" class="ref-band-line"/>
+        <text x="536" y="200" text-anchor="end" class="chart-axis-label">渠道容量</text>
+        <text x="536" y="212" text-anchor="end" class="chart-axis-label">上限500–650</text>
+
+        <line x1="70" y1="290" x2="540" y2="290" class="grid-line"/>
+        <text x="62" y="294" text-anchor="end" class="chart-axis-label">0</text>
+        <text x="62" y="204" text-anchor="end" class="chart-axis-label">650</text>
+        <text x="62" y="115" text-anchor="end" class="chart-axis-label">1500</text>
+
+        <rect x="93.75" y="32" width="70" height="258" rx="4" fill="var(--critical)"/>
+        <text x="128.75" y="22" text-anchor="middle" class="chart-value-label">1,720条</text>
+        <text x="128.75" y="310" text-anchor="middle" class="chart-cat-label">5%</text>
+
+        <rect x="211.25" y="161" width="70" height="129" rx="4" fill="var(--critical)"/>
+        <text x="246.25" y="151" text-anchor="middle" class="chart-value-label">860条</text>
+        <text x="246.25" y="310" text-anchor="middle" class="chart-cat-label">10%</text>
+
+        <rect x="328.75" y="204" width="70" height="86" rx="4" fill="var(--warning)"/>
+        <text x="363.75" y="194" text-anchor="middle" class="chart-value-label">573条</text>
+        <text x="363.75" y="310" text-anchor="middle" class="chart-cat-label">15%</text>
+
+        <rect x="446.25" y="225" width="70" height="65" rx="4" fill="var(--good)"/>
+        <text x="481.25" y="215" text-anchor="middle" class="chart-value-label">430条</text>
+        <text x="481.25" y="310" text-anchor="middle" class="chart-cat-label">20%</text>
+
+        <text x="305" y="330" text-anchor="middle" class="chart-axis-label">线索 → 成交 转化率假设</text>
+      </svg>
+      <figcaption>红色=渠道容量明显不够 · 黄色=刚好压线，零缓冲 · 绿色=容量充裕（转化率越高，越靠热渠道/转介绍支撑）</figcaption>
+    </figure>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>线索来源</th><th class="num">Q4理论产出</th><th>性质</th></tr></thead>
+        <tbody>
+          <tr><td>277条互通存量线索</td><td class="num">277条(一次性)</td><td><span class="pill confirmed">已确认</span></td></tr>
+          <tr><td>外部线索公司</td><td class="num">45–60条(15–20/月×3)</td><td><span class="pill confirmed">已确认</span></td></tr>
+          <tr><td>每日陌拓跟进</td><td class="num">与上方大概率重叠</td><td><span class="pill estimate">测算估算</span></td></tr>
+          <tr><td>合计可摸到容量</td><td class="num">≈500–650条</td><td><span class="pill estimate">测算估算</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout pending" style="border-left-color:var(--critical);background:var(--critical-bg);">
+      <strong>历史线索→成交转化率仍是未知数。</strong> 没有这个真实数字，无法判断现有渠道到底是"够"还是"差一半"——这是整份模型里最需要立刻补上的一个输入。
+    </div>
+
+    <div class="callout note">
+      <strong>行业基准核实：</strong>冷线索转化率通常仅1.5%–2%，MQL级4%–6%，暖线索/转介绍15%–25%<sup>[1][2]</sup>——本模型5%–25%的敏感性区间站得住，但277条线索里如果偏冷而非暖，实际表现可能比图表最左侧那根柱子还差。更关键的一条：<strong>高客单价实体设备类产品的平均销售周期是110–130天</strong><sup>[3]</sup>，比现在到12月31日剩余的约106天还长——9月才首次触达的新线索，大概率来不及在Q4内走完流程，这个季度真正有希望成交的基本只有已经有信任基础的存量客户。
+    </div>
+  </section>
+
+  <section id="tradeshow">
+    <p class="sec-eyebrow">04 / 展会预算</p>
+    <h2>IFMA World Workplace 2026 — 解决候选池太薄的问题，不是冲这季度的数字</h2>
+    <p class="lede">11月18–19日Anaheim，本地展会省机票物流成本，观众正是隔音舱采购决策人。定位是<strong>扩充候选池</strong>，不是冲这季度的合同数字。</p>
+
+    <div class="grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <h3 style="margin:0 0 6px;font-size:15px;">展会档期</h3>
+        <table>
+          <tr><td>时间</td><td class="num">2026-11-18 ~ 19</td></tr>
+          <tr><td>布展</td><td class="num">2026-11-16 ~ 17</td></tr>
+          <tr><td>地点</td><td>Anaheim, CA</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 6px;font-size:15px;">备选：EDspaces 2026</h3>
+        <table>
+          <tr><td>时间</td><td class="num">2026-10-28 ~ 30</td></tr>
+          <tr><td>地点</td><td>Kansas City, MO</td></tr>
+          <tr><td>匹配客群</td><td>学校设施采购</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>预算项</th><th class="num">估算区间</th><th style="width:160px;">占比(按上限)</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>展位费(10x10)</td><td class="num">$4,500–$5,500</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span></td>
+            <td><span class="pill pending">待确认</span></td>
+          </tr>
+          <tr>
+            <td>展位基础设施(地毯/桌椅/电力/网络)</td><td class="num">$1,500–$3,000</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:55%"></span></span></td>
+            <td><span class="pill estimate">测算估算</span></td>
+          </tr>
+          <tr>
+            <td>搭建物料设计制作</td><td class="num">$1,500–$4,000</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:73%"></span></span></td>
+            <td><span class="pill estimate">测算估算</span></td>
+          </tr>
+          <tr>
+            <td>展示样机(仓库调货+本地运输)</td><td class="num">$300–$800</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:15%"></span></span></td>
+            <td><span class="pill confirmed">已确认(带)</span></td>
+          </tr>
+          <tr>
+            <td>运输/装卸(drayage)</td><td class="num">$300–$800</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:15%"></span></span></td>
+            <td><span class="pill estimate">测算估算</span></td>
+          </tr>
+          <tr>
+            <td>团队差旅(本地，省机票)</td><td class="num">$300–$800</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:15%"></span></span></td>
+            <td><span class="pill estimate">测算估算</span></td>
+          </tr>
+          <tr>
+            <td>宣传物料 + 获客工具</td><td class="num">$500–$1,300</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:24%"></span></span></td>
+            <td><span class="pill estimate">测算估算</span></td>
+          </tr>
+          <tr>
+            <td>超额展商证件</td><td class="num">$850/人</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:16%"></span></span></td>
+            <td><span class="pill confirmed">已确认单价</span></td>
+          </tr>
+          <tr>
+            <td>应急预留(10–15%)</td><td class="num">$890–$2,430</td>
+            <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:44%"></span></span></td>
+            <td><span class="pill estimate">测算估算</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="border-color:var(--accent);max-width:360px;">
+      <div class="kpi-label">确认预算(含实体样机，不含超额证件)</div>
+      <div class="kpi-val" style="color:var(--accent-strong);">$9,800–$18,600</div>
+      <div class="kpi-sub">样机来自现有仓库库存，只需本地运输——不再需要区分"基础/升级方案"，比原先估的$18K–$25K低不少</div>
+    </div>
+
+    <div class="callout risk">
+      <strong>时间紧迫：</strong> 展会11月18日开幕，距今只剩约9周。展位报价确认、样机决策、物料制作都需要本周启动，拖到10月基本来不及备齐。
+    </div>
+
+    <div class="callout note">
+      <strong>行业数据支持这个渠道选择：</strong>展会现场线索的转化率约为网站线索的4.5倍，81%的参展观众本身就有采购决策权<sup>[4]</sup>——这是IFMA这类精准对口展会比泛泛线上广告更值这笔预算的原因。但同一条销售周期规律仍然适用：这批联系人大概率要到2027年才成交，别指望12月前签单。
+    </div>
+  </section>
+
+  <section id="open">
+    <p class="sec-eyebrow">05 / 待确认事项与建议</p>
+    <h2>把这3个数字补上，模型就能从"估算"变成"可以拍板的数字"</h2>
+
+    <ul class="check-list">
+      <li><span class="check-num">1</span><span><b>历史线索→成交转化率</b> — 决定走量渠道到底够不够，是整份模型最关键的未知数。</span></li>
+      <li><span class="check-num">2</span><span><b>加州区域当前实际季度营收基数</b> — 用于对$3M目标做最坏情况压力测试。</span></li>
+      <li><span class="check-num">3</span><span><b>IFMA展位实际报价</b> — 联系Exhibitor Service Center (+1-713-623-4362) 确认Anaheim主展馆价格。</span></li>
+    </ul>
+
+    <h3 style="margin:28px 0 4px;font-size:16px;">优先行动顺序</h3>
+    <div class="action-list">
+      <div class="action">
+        <div class="action-when">本周内</div>
+        <div class="action-body"><b>扩大候选账户池</b> — 从3–5个扩到至少8–10个，这是唯一能把$3M从赌注变成可控目标的杠杆，优先级高于办公室和CRM工作。行业经验法则是覆盖率≈1÷历史成交率<sup>[5]</sup>，不是固定3–5倍——成交率越低，候选池门槛越高。</div>
+      </div>
+      <div class="action">
+        <div class="action-when">本周内</div>
+        <div class="action-body"><b>确认IFMA展位报价</b> — 样机已确定从仓库调货本地运输，只剩展位报价待确认；9周的筹备窗口非常紧，拖延一周就是压缩物料/话术准备时间。</div>
+      </div>
+      <div class="action">
+        <div class="action-when">9月底前</div>
+        <div class="action-body"><b>拿到历史转化率与当前营收基数</b> — 把基准预估收窄成确定区间，并评估未达合同金额对违约金/续约条款的实际影响。</div>
+      </div>
+      <div class="action">
+        <div class="action-when">10月中旬前</div>
+        <div class="action-body"><b>核实场地净增量成本剩余变量</b> — 净增量成本已收窄到≈$200K/年，还需确认NNN额外费用与Downtown LA过渡期的双重搬迁成本，再决定是否值得签正式租约。</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    内部数据推演文档 · 基于对话中提供的输入与行业基准假设测算，用于向上汇报前的自查，非最终财务口径。
+    <div style="margin-top:10px;">
+      [1][2] 冷/暖/转介绍线索转化率基准：Landbase, "35 B2B Sales Statistics" (2026)；Zeliq, "B2B Conversion Rates by Industry"。
+      [3] 高客单价实体设备销售周期基准：Focus Digital, "Average Sales Cycle Length by Industry" (2026)；ORM Tech, "Sales Cycle Length: Benchmarks and Analysis"。
+      [4] 展会线索质量与转化基准：行业展会统计综述 (Trade Show PRO / Vendelux, 2026 Event Marketing Statistics)。
+      [5] Pipeline覆盖率经验法则：SiriusDecisions经典3–5倍模型；Gartner近期研究建议以"1÷历史成交率"更精确估算所需覆盖率。
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var TARGET = 3000000, CAP_LOW = 500, CAP_HIGH = 650;
+  var dealSize = document.getElementById('dealSize');
+  var candidates = document.getElementById('candidates');
+  var closeRate = document.getElementById('closeRate');
+  var dealSizeOut = document.getElementById('dealSizeOut');
+  var candidatesOut = document.getElementById('candidatesOut');
+  var closeRateOut = document.getElementById('closeRateOut');
+  var outDeals = document.getElementById('outDeals');
+  var outPerAccount = document.getElementById('outPerAccount');
+  var outUnits = document.getElementById('outUnits');
+  var outLeads = document.getElementById('outLeads');
+  var outVerdict = document.getElementById('outVerdict');
+
+  function fmtMoney(n){
+    if(n >= 1000000){
+      var m = Math.round((n/1000000)*100)/100;
+      return '$' + m.toString().replace(/\.00$/,'') + 'M';
+    }
+    return '$' + Math.round(n/1000) + 'K';
+  }
+
+  function update(){
+    var ds = Number(dealSize.value) * 1000;
+    var ca = Number(candidates.value);
+    var cr = Number(closeRate.value) / 100;
+
+    dealSizeOut.textContent = '$' + dealSize.value + 'K';
+    candidatesOut.textContent = ca + '个';
+    closeRateOut.textContent = closeRate.value + '%';
+
+    var deals = Math.round(TARGET / ds);
+    outDeals.textContent = deals + '笔';
+
+    var perAccount = TARGET / ca;
+    outPerAccount.textContent = fmtMoney(perAccount);
+    outUnits.textContent = '≈' + Math.round(perAccount/ds) + '台/户';
+
+    var leads = Math.round(deals / cr);
+    outLeads.textContent = leads.toLocaleString() + '条';
+
+    var verdict, cls;
+    if(leads > CAP_HIGH){ verdict = '不足'; cls = 'crit'; }
+    else if(leads >= CAP_LOW){ verdict = '紧张'; cls = 'warn'; }
+    else { verdict = '充裕'; cls = 'good'; }
+    outVerdict.textContent = verdict;
+    outVerdict.className = 'kpi-val mono ' + cls;
+  }
+
+  [dealSize, candidates, closeRate].forEach(function(el){
+    el.addEventListener('input', update);
+  });
+  update();
+})();
+</script>
+
+</body>
+</html>
