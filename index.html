@@ -342,11 +342,12 @@
 
   <nav class="toc">
     <a href="#summary">执行摘要</a>
-    <a href="#realestate">场地成本</a>
+    <a href="#realestate">场地布局</a>
     <a href="#revenue">收入可行性</a>
     <a href="#funnel">线索漏斗容量</a>
     <a href="#tradeshow">展会预算</a>
     <a href="#open">待确认与建议</a>
+    <a href="#daily">每日执行</a>
   </nav>
 
   <div class="pill-key">
@@ -369,70 +370,27 @@
     <p class="row-flag" style="margin:0 0 14px;">客单价、候选账户数、转化率——三个假设串起从合同金额到现实预估的整条链条，任何一环卡住，下游全部失真。</p>
 
     <figure>
-      <svg viewBox="0 0 900 860" role="img" aria-label="从合同目标到行动建议的逻辑链示意图">
-        <defs>
-          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/>
-          </marker>
-          <marker id="arrow-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--warning)"/>
-          </marker>
-        </defs>
+      <pre class="mermaid">
+flowchart TD
+    A["合同目标<br/>$3,000,000"] --> B{"假设：客单价<br/>$20K–$50K"}
+    B --> C["需要成交量<br/>60–150笔"]
+    C --> D{"候选账户<br/>3–5现有 vs 5–10所需"}
+    D --> E["候选池缺口"]
+    C --> F{"假设：转化率<br/>5%–25%"}
+    F --> G["所需线索量<br/>430–1,720条"]
+    H["渠道容量上限<br/>500–650条"] -. 对照 .-> G
+    G --> I["现实基准预估<br/>$1.2M–$1.9M"]
+    E --> I
+    I --> J["缺口<br/>$1.1M–$1.8M"]
+    J --> K["行动：扩大候选池 · 确认转化率 · 展会扩容"]
 
-        <line x1="450" y1="80" x2="450" y2="118" class="edge" marker-end="url(#arrow)"/>
-        <line x1="450" y1="228" x2="450" y2="268" class="edge" marker-end="url(#arrow)"/>
-        <line x1="410" y1="330" x2="255" y2="368" class="edge" marker-end="url(#arrow)"/>
-        <line x1="490" y1="330" x2="655" y2="368" class="edge" marker-end="url(#arrow)"/>
-        <line x1="230" y1="478" x2="230" y2="538" class="edge" marker-end="url(#arrow)"/>
-        <line x1="670" y1="478" x2="670" y2="538" class="edge" marker-end="url(#arrow)"/>
-        <line x1="790" y1="490" x2="742" y2="536" class="edge-dashed" marker-end="url(#arrow-warn)"/>
-        <line x1="255" y1="600" x2="400" y2="620" class="edge" marker-end="url(#arrow)"/>
-        <line x1="650" y1="600" x2="500" y2="620" class="edge" marker-end="url(#arrow)"/>
-        <line x1="450" y1="682" x2="450" y2="718" class="edge" marker-end="url(#arrow)"/>
-        <line x1="450" y1="762" x2="450" y2="798" class="edge" marker-end="url(#arrow)"/>
-        <text x="768" y="505" text-anchor="middle" class="node-sub" font-size="10">对照</text>
-
-        <rect x="320" y="20" width="260" height="60" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
-        <text x="450" y="45" text-anchor="middle" class="node-label">合同目标</text>
-        <text x="450" y="63" text-anchor="middle" class="node-sub">$3,000,000</text>
-
-        <polygon points="450,118 585,173 450,228 315,173" fill="var(--warning)"/>
-        <text x="450" y="168" text-anchor="middle" class="node-label-inverse">假设：客单价</text>
-        <text x="450" y="185" text-anchor="middle" class="node-sub-inverse">$20K–$50K</text>
-
-        <rect x="320" y="270" width="260" height="60" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
-        <text x="450" y="295" text-anchor="middle" class="node-label">需要成交量</text>
-        <text x="450" y="313" text-anchor="middle" class="node-sub">60–150笔</text>
-
-        <polygon points="230,368 355,423 230,478 105,423" fill="var(--surface-2)" stroke="var(--border)"/>
-        <text x="230" y="415" text-anchor="middle" class="node-label" font-size="11">候选账户</text>
-        <text x="230" y="431" text-anchor="middle" class="node-sub" font-size="10">3–5现有 vs 5–10所需</text>
-
-        <polygon points="670,368 795,423 670,478 545,423" fill="var(--warning)"/>
-        <text x="670" y="418" text-anchor="middle" class="node-label-inverse">假设：转化率</text>
-        <text x="670" y="435" text-anchor="middle" class="node-sub-inverse">5%–25%</text>
-
-        <rect x="130" y="540" width="200" height="60" rx="6" fill="var(--critical)"/>
-        <text x="230" y="576" text-anchor="middle" class="node-label-inverse">候选池缺口</text>
-
-        <rect x="560" y="540" width="220" height="60" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
-        <text x="670" y="565" text-anchor="middle" class="node-label">所需线索量</text>
-        <text x="670" y="583" text-anchor="middle" class="node-sub">430–1,720条</text>
-
-        <rect x="730" y="465" width="150" height="50" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
-        <text x="805" y="486" text-anchor="middle" class="node-label" font-size="10.5">渠道容量上限</text>
-        <text x="805" y="502" text-anchor="middle" class="node-sub" font-size="10">500–650条</text>
-
-        <rect x="320" y="620" width="260" height="62" rx="6" fill="var(--surface-2)" stroke="var(--border)"/>
-        <text x="450" y="646" text-anchor="middle" class="node-label">现实基准预估</text>
-        <text x="450" y="664" text-anchor="middle" class="node-sub">$1.2M–$1.9M</text>
-
-        <rect x="320" y="720" width="260" height="42" rx="6" fill="var(--critical)"/>
-        <text x="450" y="746" text-anchor="middle" class="node-label-inverse" font-size="12">缺口 $1.1M–$1.8M</text>
-
-        <rect x="230" y="800" width="440" height="42" rx="6" fill="var(--accent)"/>
-        <text x="450" y="826" text-anchor="middle" class="node-label-inverse" font-size="11.5">行动：扩大候选池 · 确认转化率 · 展会扩容</text>
-      </svg>
+    classDef assumption fill:#B8791F,stroke:#8a5c14,color:#fff
+    classDef risk fill:#B4472A,stroke:#8a361f,color:#fff
+    classDef action fill:#0D7377,stroke:#094e51,color:#fff
+    class B,F assumption
+    class E,J risk
+    class K action
+      </pre>
       <figcaption>三个可调假设决定了整条链条的可信度——下方"调整假设"计算器可以逐一测试</figcaption>
     </figure>
 
@@ -442,9 +400,31 @@
   </section>
 
   <section id="realestate">
-    <p class="sec-eyebrow">01 / 场地成本</p>
-    <h2>仓办一体化：单价降87%，总支出涨2.5倍</h2>
-    <p class="lede">仓办一体化单价降87%，但起租门槛拉高绝对支出约 <strong>$213K/年</strong>。值不值，取决于是否已有单独仓储支出可被吸收。</p>
+    <p class="sec-eyebrow">01 / 场地布局</p>
+    <h2>场地布局三步规划：短期落地、低成本曝光、中长期一体化</h2>
+    <p class="lede">核心思路：短期搬迁落地 + 低成本合作曝光 + 中长期一体化场地建设，优先复用现有资源，延续"以仓换租"模式控制成本。</p>
+
+    <div class="action-list" style="margin-bottom:22px;">
+      <div class="action">
+        <div class="action-when">短期<br>本月内</div>
+        <div class="action-body"><b>从尔湾(Cosamisa)搬迁至Downtown LA</b> — 完成选址确认、场地对接、手续办理、入驻调试全流程，稳定加州日常办公场景。</div>
+      </div>
+      <div class="action">
+        <div class="action-when">短期配套<br>同步推进</div>
+        <div class="action-body"><b>对接家具设计中心、艺术中心洽谈合作</b> — 采用产品出借(非赠送)模式，以隔音舱/声学吊舱产品置换展位，低成本获取产品线下曝光，拓展B端客户，顺带为候选账户池扩容。</div>
+      </div>
+      <div class="action">
+        <div class="action-when">中长期</div>
+        <div class="action-body"><b>寻找复合型场地</b> — 仓储 + 小型生产 + 办公室 + 产品展厅一体化，仓储、生产、展示、办公同一空间。City of Industry是目前评估中的候选方向，财务测算见下。</div>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <strong>成本策略贯穿三步：</strong>优先复用现有资源，延续"以仓换租"思路控制租金与场地投入——现在已确认的$1,000/月独立仓储支出，正是这个思路能不能延续到中长期一体化场地谈判里的关键筹码。
+    </div>
+
+    <h3 style="margin:26px 0 6px;font-size:16px;">中长期候选方案财务测算：City of Industry仓办一体化</h3>
+    <p class="row-flag" style="margin:0 0 16px;">单价降87%，但起租门槛拉高绝对支出约 <strong>$213K/年</strong>；值不值，取决于现有独立仓储支出是否被吸收——下表已扣除。</p>
 
     <figure>
       <svg viewBox="0 0 560 320" role="img" aria-label="现办公室与仓办一体化年化成本对比柱状图">
@@ -592,6 +572,7 @@
         <text x="536" y="212" text-anchor="end" class="chart-axis-label">上限500–650</text>
 
         <line x1="70" y1="290" x2="540" y2="290" class="grid-line"/>
+        <line x1="70" y1="215" x2="70" y2="215" class="grid-line"/>
         <text x="62" y="294" text-anchor="end" class="chart-axis-label">0</text>
         <text x="62" y="204" text-anchor="end" class="chart-axis-label">650</text>
         <text x="62" y="115" text-anchor="end" class="chart-axis-label">1500</text>
@@ -678,7 +659,7 @@
           <tr>
             <td>搭建物料设计制作</td><td class="num">$1,500–$4,000</td>
             <td class="bar-cell"><span class="bar-track"><span class="bar-fill" style="width:73%"></span></span></td>
-            <td><span class="pill estimate">测算估算</span></td>
+            <td><span class="pill estimate">测算估算<br></span></td>
           </tr>
           <tr>
             <td>展示样机(仓库调货+本地运输)</td><td class="num">$300–$800</td>
@@ -731,12 +712,13 @@
 
   <section id="open">
     <p class="sec-eyebrow">05 / 待确认事项与建议</p>
-    <h2>把这3个数字补上，模型就能从"估算"变成"可以拍板的数字"</h2>
+    <h2>把这4个数字补上，模型就能从"估算"变成"可以拍板的数字"</h2>
 
     <ul class="check-list">
       <li><span class="check-num">1</span><span><b>历史线索→成交转化率</b> — 决定走量渠道到底够不够，是整份模型最关键的未知数。</span></li>
       <li><span class="check-num">2</span><span><b>加州区域当前实际季度营收基数</b> — 用于对$3M目标做最坏情况压力测试。</span></li>
       <li><span class="check-num">3</span><span><b>IFMA展位实际报价</b> — 联系Exhibitor Service Center (+1-713-623-4362) 确认Anaheim主展馆价格。</span></li>
+      <li><span class="check-num">4</span><span><b>家具设计中心/艺术中心合作对象与置换条款</b> — 具体谈哪几家、产品出借周期、展位曝光量怎么核算，都还没敲定。</span></li>
     </ul>
 
     <h3 style="margin:28px 0 4px;font-size:16px;">优先行动顺序</h3>
@@ -757,6 +739,31 @@
         <div class="action-when">10月中旬前</div>
         <div class="action-body"><b>核实场地净增量成本剩余变量</b> — 净增量成本已收窄到≈$200K/年，还需确认NNN额外费用与Downtown LA过渡期的双重搬迁成本，再决定是否值得签正式租约。</div>
       </div>
+    </div>
+  </section>
+
+  <section id="daily">
+    <p class="sec-eyebrow">06 / 每日执行拆解</p>
+    <h2>9月剩余时间：把"本周内/本月内"拆到每一天</h2>
+    <p class="lede">以下是到9月底"本月内完成搬迁"这个deadline之前的逐日任务拆解；10–12月仍按前面的周/月节奏推进，不再展开到每日颗粒度。</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th style="width:110px;">日期</th><th>今日任务</th></tr></thead>
+        <tbody>
+          <tr><td class="num">9/16 周三(今天)</td><td>致电IFMA Exhibitor Service Center确认Anaheim展位报价；梳理候选账户扩容名单草案(目标8–10个)</td></tr>
+          <tr><td class="num">9/17 周四</td><td>联系3–5家目标家具设计中心/艺术中心，提出产品置换展位合作意向</td></tr>
+          <tr><td class="num">9/18 周五</td><td>跟进Downtown LA场地条款与选址确认；启动候选账户逐户采购潜力评估</td></tr>
+          <tr><td class="num">9/21 周一</td><td>汇总候选账户评估结果，锁定新增候选名单；跟进IFMA展位报价回复</td></tr>
+          <tr><td class="num">9/22 周二</td><td>Downtown LA场地手续办理(条款落定/签约)</td></tr>
+          <tr><td class="num">9/23 周三</td><td>家具设计中心/艺术中心合作条款敲定，至少锁定1家试点</td></tr>
+          <tr><td class="num">9/24 周四</td><td>新增候选账户首轮接触启动；IFMA展位物料设计启动(若报价已确认)</td></tr>
+          <tr><td class="num">9/25 周五</td><td>拉取加州区域历史线索→成交转化率与当前季度营收基数</td></tr>
+          <tr><td class="num">9/28 周一</td><td>核实City of Industry候选场地的NNN额外费用条款</td></tr>
+          <tr><td class="num">9/29 周二</td><td>Downtown LA入驻调试；样机仓库调货至Anaheim的本地运输安排启动</td></tr>
+          <tr><td class="num">9/30 周三</td><td>月度复盘：搬迁"本月内完成"是否达标，对齐10月计划</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
