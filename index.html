@@ -289,6 +289,18 @@
   .calc-row{display:grid;grid-template-columns:120px 1fr 64px;align-items:center;gap:12px;}
   .calc-label{font-size:13px;color:var(--ink-2);font-family:var(--font-display);}
   .calc-row input[type="range"]{width:100%;accent-color:var(--accent);}
+  .calc-row input[type="number"]{
+    width:100%;
+    background:var(--surface);
+    color:var(--ink);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:8px 10px;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color-scheme:light;
+  }
+  .calc-row input[type="number"]::placeholder{color:var(--muted);}
   .calc-out{font-size:13px;font-weight:600;color:var(--ink);text-align:right;}
   .calc-results{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
   .calc-result{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;}
